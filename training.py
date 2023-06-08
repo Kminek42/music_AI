@@ -20,17 +20,20 @@ print(dev)
 
 input_len = 8
 model = nn.Sequential(
-    nn.Linear(input_len * 2, 4096),
+    nn.Linear(input_len * 2, 4096, device=dev),
     nn.ReLU(),
-    nn.Linear(4096, 1024),
+    nn.Linear(4096, 1024, device=dev),
     nn.ReLU(),
-    nn.Linear(1024, 512),
+    nn.Linear(1024, 512, device=dev),
     nn.ReLU(),
-    nn.Linear(512, input_len * 2)
+    nn.Linear(512, input_len * 2, device=dev)
 )
 
-model = torch.load("model.pth")
-model.eval()
+try:
+    model = torch.load("model.pth")
+    model.eval()
+except:
+    pass
 
 optimizer = optim.SGD(model.parameters(), lr=0.0000001)
 
